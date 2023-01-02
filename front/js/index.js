@@ -1,18 +1,24 @@
-//Fetch: Récupération des données de l'API//
+//FETCH: RECUPERATION DES DONNEES DE L'API//
+const apiUrl = "http://localhost:3000/api/products";
 
-fetch("http://localhost:3000/api/products")
-.then(response => response.json())
-.then(data => getProducts(data))
+fetch(apiUrl)
+    .then( response => response.json())
+    .then( products => displayProducts(products))
+    .catch(err => console.error(err));
 
-    function getProducts(data) {
-    console.log(data)
-    let imageUrl = data[0].imageUrl
-    //création de l'élément <a></a>
-    let productLink = document.createElement("a")
-    productLink.href = imageUrl
-    productLink.text = "Kanap Sinopé"
-    let items = document.getElementById("items")
-    items.appendChild(productLink)
-    
+//AFFICHAGE DES PRODUITS VIA L'API//
+    function displayProducts(products) {
+        const productList = document.getElementById ("items")
+        for(let product of products) {
+            productList.innerHTML +=
+            `<a href="./product.html?id=${product._id}">          
+            <article>
+            <img src="${product.imageUrl}"" alt="${product.altTxt}">
+            <h3 class="productName">${product.name}</h3>
+            <p class="productDescription">${product.description}</p>
+            </article>
+            </a>`;
+            console.log(products)
+        
+    }
 }
-
