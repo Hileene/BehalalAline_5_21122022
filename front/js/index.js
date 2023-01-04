@@ -8,7 +8,7 @@ fetch(apiUrl)
 
 //AFFICHAGE DES PRODUITS VIA L'API//
     function displayProducts(products) {
-        const productList = document.getElementById ("items")
+        const productList = document.getElementById("items")
         for(let product of products) {
             productList.innerHTML +=
             `<a href="./product.html?id=${product._id}">          
@@ -18,7 +18,6 @@ fetch(apiUrl)
             <p class="productDescription">${product.description}</p>
             </article>
             </a>`;
-            console.log(products)
         
     }
 }
