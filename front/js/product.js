@@ -1,13 +1,16 @@
 // RECUPERATION DE L'ID DE CHAQUE PRODUIT
 const idProduct = new URLSearchParams(window.location.search);
 const id = idProduct.get('id')
-console.log (id);
+console.log(id);
 
 const apiUrl = "http://localhost:3000/api/products/";
 
 fetch(`${apiUrl}/${id}`)
     .then(response => response.json())
-    .then(product => displayProducts(product))
+    .then(product => {
+        displayProducts(product)
+        console.log(product)
+    })
     .catch(err => console.error(err));
 
 //AFFICHAGE IMG, TITRE, PRIX, DESCRIPTION
@@ -20,34 +23,24 @@ function displayProducts(product) {
     imgProduct.appendChild(image);
 
     const titleProduct = document.querySelector("#title")
-    const title = document.createElement("h1")
-    title.textContent = product.name
-    titleProduct.appendChild(title);
+    titleProduct.textContent = product.name;
 
     const priceProduct = document.querySelector("#price")
-    const price = document.createElement("p")
-    price.textContent = product.price
-    priceProduct.appendChild(price);
+    priceProduct.textContent = product.price;
 
     const descriptionProduct = document.querySelector("#description")
-    const description = document.createElement("p")
-    description.textContent = product.description
-    descriptionProduct.appendChild(description);
+    descriptionProduct.textContent = product.description;
 
-    //AFFICHAGE COULEURS
-    const colorProduct = document.querySelector("#colors")
-    const color = document.createElement("option")
-    color.textContent = product.color
-    colorProduct.appendChild(color);
+    //MISE EN PLACE DE DES OPTIONS DE COULEURS
+    const colorsProduct = document.querySelector("#colors")
+    const colors = product.colors
+    colors.forEach((color) => {
+        const colorsOptions = document.createElement("option")
+        colorsOptions.value = color
+        colorsOptions.textContent = color
+        colorsProduct.appendChild(colorsOptions);
+        console.log(colorsOptions)
+    })
 
-   
+
 }
-
-
-
-
-
-
-
-
-
