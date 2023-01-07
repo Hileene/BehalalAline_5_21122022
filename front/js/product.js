@@ -38,6 +38,10 @@ function displayProducts(product) {
         colorsOptions.textContent = color
         colorsProduct.appendChild(colorsOptions);
     })
-
-
 }
+
+// TABLEAU QUI CONTIENT LES DONNEES DU PRODUIT
+
+// FONCTION POUR AJOUTER UN PRODUIT AU PANIER
+
+// VALIDATION DU NOMBRE D'ARTICLES
