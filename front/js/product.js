@@ -1,4 +1,5 @@
 // RECUPERATION DE L'ID DE CHAQUE PRODUIT
+
 const idProduct = new URLSearchParams(window.location.search);
 const id = idProduct.get('id')
 console.log(id);
