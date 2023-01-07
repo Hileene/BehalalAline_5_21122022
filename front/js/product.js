@@ -8,10 +8,7 @@ const apiUrl = "http://localhost:3000/api/products/";
 
 fetch(`${apiUrl}/${id}`)
     .then(response => response.json())
-    .then(product => {
-        displayProducts(product)
-        console.log(product)
-    })
+    .then(product => displayProducts(product))
     .catch(err => console.error(err));
 
 //AFFICHAGE IMG, TITRE, PRIX, DESCRIPTION
@@ -40,7 +37,6 @@ function displayProducts(product) {
         colorsOptions.value = color
         colorsOptions.textContent = color
         colorsProduct.appendChild(colorsOptions);
-        console.log(colorsOptions)
     })
 
 
