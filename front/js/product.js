@@ -87,11 +87,6 @@ addButton.addEventListener("click", (e) => {
         }
         /*addItemToCart.push(productData)
         localStorage.setItem("cart", JSON.stringify(addItemToCart))*/
-
     }
-
-
-
-
 })
 
