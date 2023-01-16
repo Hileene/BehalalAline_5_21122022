@@ -78,7 +78,7 @@ addButton.addEventListener("click", (e) => {
             localStorage.setItem("cart", JSON.stringify(addItemToCart))
             console.log("Votre produit à bien été ajouté au panier")
         }
-        //Si le produit est déjà dans le panier
+        //Si le produit avec un même id et une même couleur est déjà dans le panier
         else {
             //Augmenter la quantité du produit identique
             productToUpdate.quantity += productData.quantity;
