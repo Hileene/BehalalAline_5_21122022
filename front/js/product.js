@@ -58,11 +58,19 @@ addButton.addEventListener("click", (e) => {
     }
 
 
+    // FONCTION POUR COMFIRMER L'AJOUT DU PRODUIT DANS LE PANIER
+    const addToCartConrfirmation = () =>{
+        if(window.confirm("Votre produit a bien été ajouté. Consultez votre panier OK ou revenir sur la page d'accueil ANNULER")){
+            window.location.href = "cart.html";
+        }else{
+        window.location.href = "index.html";
+        }
+    }
     saveDataLocalStorage(color, quantity)
 
+    
+
     //SAUVEGARDER LES DONNÉES DANS LE LOCALSTORAGE
-
-
     function saveDataLocalStorage(color, quantity) {
         const productData = {
             id: id,
@@ -71,19 +79,23 @@ addButton.addEventListener("click", (e) => {
         }
         //AJOUT DE LA MÉTHODE .FIND POUR TROUVER UN ÉLÉMENT DANS L'ARRAY
         const productToUpdate = addItemToCart.find(element => element.id === productData.id && element.color === productData.color)
+        
         // Si le produit n'était pas dans le panier
         if (productToUpdate == undefined) {
             //Mettre à jour le panier
             addItemToCart.push(productData);
             localStorage.setItem("cart", JSON.stringify(addItemToCart))
             console.log("Votre produit à bien été ajouté au panier")
+            addToCartConrfirmation()
         }
+
         //Si le produit avec un même id et une même couleur est déjà dans le panier
         else {
             //Augmenter la quantité du produit identique
             productToUpdate.quantity += productData.quantity;
             localStorage.setItem("cart", JSON.stringify(addItemToCart))
             console.log("Vous avez ajouté le même canapé", productToUpdate)
+            addToCartConrfirmation()
         }
         /*addItemToCart.push(productData)
         localStorage.setItem("cart", JSON.stringify(addItemToCart))*/
