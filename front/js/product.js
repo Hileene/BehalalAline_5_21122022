@@ -1,6 +1,5 @@
 //VARIABLE QUI RÉCUPÈRE DES VALEURS DANS LE LOCALSTRORAGE
 let addItemToCart = JSON.parse(localStorage.getItem("cart")) || []
-
 console.log(addItemToCart)
 
 //RÉCUPÈRATION DE L'ID DU PRODUIT
@@ -14,6 +13,8 @@ fetch(`${apiUrl}/${id}`)
     .then(response => response.json())
     .then(product => displayProducts(product))
     .catch(err => console.error(err));
+
+    
 
 //AFFICHAGE IMG, TITRE, PRIX, DESCRIPTION
 function displayProducts(product) {
@@ -46,28 +47,15 @@ function displayProducts(product) {
 // VÉRIFICATION QUE LES CHAMPS COULEUR ET NBR D'ARTICLES ONT ÉTÉ SÉLECTIONNÉS
 
 const addButton = document.querySelector("#addToCart")
-addButton.addEventListener("click", (e) => {
-    e.preventDefault();
+addButton.addEventListener("click", () => {
     let color = document.querySelector("#colors").value;
     let quantity = document.querySelector("#quantity").value;
-    if (color == "") {
-        alert("Veuillez sélectionner une couleur")
-    }
-    if (quantity < 1 || quantity > 100) {
-        alert("Vous devez ajouter au moins article et pas plus de 100 articles")
-    }
+    if (color == "" || quantity < 1 || quantity > 100) {
+        alert("Veuillez sélectionner une couleur et au moins 1 article (max.100 articles)")
+    }else{
+        saveDataLocalStorage(color, quantity)
 
-
-    // FONCTION POUR COMFIRMER L'AJOUT DU PRODUIT DANS LE PANIER
-    const addToCartConrfirmation = () =>{
-        if(window.confirm("Votre produit a bien été ajouté. Consultez votre panier OK ou revenir sur la page d'accueil ANNULER")){
-            window.location.href = "cart.html";
-        }else{
-        window.location.href = "index.html";
-        }
     }
-    saveDataLocalStorage(color, quantity)
-
     
 
     //SAUVEGARDER LES DONNÉES DANS LE LOCALSTORAGE
@@ -75,30 +63,37 @@ addButton.addEventListener("click", (e) => {
         const productData = {
             id: id,
             color: color,
-            quantity: Number(quantity),
+            quantity: Number(quantity)
         }
         //AJOUT DE LA MÉTHODE .FIND POUR TROUVER UN ÉLÉMENT DANS L'ARRAY
-        const productToUpdate = addItemToCart.find(element => element.id === productData.id && element.color === productData.color)
-        
+         const productToUpdate = addItemToCart.find(element => element.id === productData.id && element.color === productData.color)
         // Si le produit n'était pas dans le panier
-        if (productToUpdate == undefined) {
+        if(productToUpdate == undefined) {
             //Mettre à jour le panier
-            addItemToCart.push(productData);
-            localStorage.setItem("cart", JSON.stringify(addItemToCart))
-            console.log("Votre produit à bien été ajouté au panier")
-            addToCartConrfirmation()
-        }
+             addItemToCart.push(productData);
+             localStorage.setItem("cart", JSON.stringify(addItemToCart))
+            alert("Votre produit à bien été ajouté au panier")
 
+        }
         //Si le produit avec un même id et une même couleur est déjà dans le panier
         else {
             //Augmenter la quantité du produit identique
-            productToUpdate.quantity += productData.quantity;
-            localStorage.setItem("cart", JSON.stringify(addItemToCart))
-            console.log("Vous avez ajouté le même canapé", productToUpdate)
-            addToCartConrfirmation()
+            let newQuantity = productToUpdate.quantity + productData.quantity;
+            if(newQuantity > 100) {
+                alert("Vous ne pouvez pas avoir plus de 100 produits dans votre panier");
+
+            }
+            else{
+                productToUpdate.quantity = newQuantity;
+                localStorage.setItem("cart", JSON.stringify(addItemToCart)) 
+                alert("Votre produit a bien été ajouté au panier")
+            }
         }
-        /*addItemToCart.push(productData)
-        localStorage.setItem("cart", JSON.stringify(addItemToCart))*/
-    }
-})
+        
+     }
+ })
+       
+        
+
+
 
