@@ -41,6 +41,7 @@ else {
                 </div>
               </article>`;
               updateQuantity()
+              removeItem()
               //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
               function updateQuantity(){
                   let inputs = document.querySelectorAll(".itemQuantity");
@@ -57,7 +58,12 @@ else {
                   })
                 })
               }
-              //FONCTION POUR SUPPRIMER UN PRODUI DU PANIER
+              //FONCTION POUR SUPPRIMER UN PRODUIT DU PANIER
+              function removeItem() {
+                let deleteItem = document.querySelectorAll(".cart__item__content__settings__delete")
+                console.log(deleteItem)
+                
+              }
 
 
               //FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
