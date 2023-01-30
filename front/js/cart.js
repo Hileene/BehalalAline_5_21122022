@@ -19,7 +19,7 @@ else {
       .then(response => response.json())
       .then(product => {
         document.getElementById("cart__items").innerHTML +=
-          ` <article class="cart__item" data-id="${product._id}" data-color="${addItemToCart[i].color}" data-quantity="${addItemToCart[i].quantity}">
+          ` <article class="cart__item" data-id="${product._id}" data-color="${addItemToCart[i].color}">
                 <div class="cart__item__img">
                   <img src="${product.imageUrl}" alt="${product.altTxt}">
                 </div>
@@ -32,42 +32,75 @@ else {
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" data-id="${product._id}" data-color="${addItemToCart[i].color}" value="${addItemToCart[i].quantity}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${addItemToCart[i].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
+                      <p class="deleteItem" data-id="${addItemToCart[i].id}" data-color="${addItemToCart[i].color}">Supprimer</p>
                     </div>
                   </div>
                 </div>
               </article>`;
               updateQuantity()
               removeItem()
+              totalPrice()
               //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
               function updateQuantity(){
                   let inputs = document.querySelectorAll(".itemQuantity");
-                  console.log(inputs)
                   inputs.forEach((input, i) => {
                     input.addEventListener("change", () => {
-                      console.log(input.value);
-                      console.log(i)
-                      console.log(addItemToCart[i])
+                      /*console.log(input.value);
+                      console.log(i)*/
                       addItemToCart[i].quantity = input.value;
-                      console.log(addItemToCart[i])
+                      console.log(addItemToCart[i].quantity)
                       localStorage.setItem("cart", JSON.stringify(addItemToCart))
+                      totalPrice()
                     
                   })
                 })
               }
               //FONCTION POUR SUPPRIMER UN PRODUIT DU PANIER
               function removeItem() {
-                let deleteItem = document.querySelectorAll(".cart__item__content__settings__delete")
-                console.log(deleteItem)
-                
+                let deleteItems = document.querySelectorAll(".cart__item .deleteItem")
+                deleteItems.forEach((item, i) => {
+                  item.addEventListener("click", () => {
+                    //e.preventDefault();
+                    let removeId = addItemToCart[i].id
+                    let removeColor = addItemToCart[i].color
+                    addItemToCart = addItemToCart.filter(item => item.id !== removeId || item.color !== removeColor)
+                    localStorage.setItem("cart", JSON.stringify(addItemToCart))
+                    alert('Votre article a bien été supprimé.');
+                    if(addItemToCart.length === 0) {
+                      localStorage.clear()
+                    }
+                    location.reload()
+
+
+                  })
+                })
+
               }
 
 
               //FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
-              
+              function totalPrice() {
+                //Déclaration des variables de la quantité et du prix total en tant que nombre
+                let totalItems = 0
+                let totalAmount = 0
+                let price = product.price
+                //console.log(price)
+                //Déclaration et association du calcul aux éléments ".cart__item"
+                const products= document.querySelectorAll(".cart__item")
+                products.forEach((product) => {
+                  totalItems += JSON.parse(addItemToCart[i].quantity)
+                  console.log(totalItems)
+                  totalAmount += addItemToCart[i].quantity * price
+                  //console.log(product)
+                  console.log(totalAmount)
+                  //Affichage des résultats dans le DOM
+                  document.getElementById("totalQuantity").textContent = totalItems
+                  document.getElementById("totalPrice").textContent = totalAmount
+                })
+              }
                 
             })
             
