@@ -117,3 +117,11 @@ const lastName = document.getElementById("lastName");
 const address = document.getElementById("address");
 const city = document.getElementById("city");
 const email = document.getElementById("email");
+
+//Récupération des id messages d'erreur
+
+const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+const addressErrorMsg = document.getElementById("addressErrorMsg");
+const cityErrorMsg = document.getElementById("cityErrorMsg");
+const emailErrorMsg = document.getElementById("emailErrorMsg");
