@@ -42,7 +42,6 @@ else {
               </article>`;
         updateQuantity()
         removeItem()
-        totalPrice()
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
         function updateQuantity() {
           let inputs = document.querySelectorAll(".itemQuantity");
@@ -53,7 +52,7 @@ else {
               addItemToCart[i].quantity = input.value;
               console.log(addItemToCart[i].quantity)
               localStorage.setItem("cart", JSON.stringify(addItemToCart))
-
+              totalPriceCart()
 
             })
           })
@@ -63,7 +62,7 @@ else {
           let deleteItems = document.querySelectorAll(".cart__item .deleteItem")
           deleteItems.forEach((item, i) => {
             item.addEventListener("click", () => {
-              //e.preventDefault();
+              console.log(item)
               let removeId = addItemToCart[i].id
               let removeColor = addItemToCart[i].color
               addItemToCart = addItemToCart.filter(item => item.id !== removeId || item.color !== removeColor)
@@ -71,9 +70,10 @@ else {
               alert('Votre article a bien été supprimé.');
               if (addItemToCart.length === 0) {
                 localStorage.clear()
+              
               }
               location.reload()
-
+              
 
             })
           })
@@ -82,7 +82,7 @@ else {
 
 
         //FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
-        function totalPrice() {
+        /* function totalPrice() {
 
             //Déclaration des variables de la quantité et du prix total en tant que nombre
             let totalItems = 0
@@ -102,11 +102,30 @@ else {
               document.getElementById("totalPrice").textContent = totalAmount
             })
         }
-
+ */
       })
       .catch(err => console.error(err));
   }
 }
+
+//TOTALPRICE
+function totalPriceCart() {
+  let totalPrice = 0
+  for(let p of addItemToCart) {
+    const apiUrl = "http://localhost:3000/api/products/";
+  
+    fetch(`${apiUrl}/${p.id}`)
+      .then(response => response.json())
+      .then(product => {
+        let totalPriceProduct = p.quantity * product.price
+        //console.log(totalPriceProduct)
+        totalPrice += totalPriceProduct
+        document.getElementById("totalPrice").textContent = totalPrice
+      })
+    }
+
+}
+totalPriceCart()
 
 // GESTION DU FORMULAIRE DE COMMANDE
 
@@ -125,3 +144,27 @@ const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
 const addressErrorMsg = document.getElementById("addressErrorMsg");
 const cityErrorMsg = document.getElementById("cityErrorMsg");
 const emailErrorMsg = document.getElementById("emailErrorMsg");
+
+
+let contact = {
+  firstName: "firstName",
+  lastName: "lastName",
+  city: "city",
+  address: "address",
+  email: "email",
+}
+let products = [
+   
+"055743915a544fde83cfdfc904935ee7"
+]
+
+let sendData = {
+
+  contact, products
+  
+}
+console.log(sendData)
+
+//FETCH METHODE POST(si bad request cela veur dire méthode envoie mles mauvaises données)
+
+//METTRE LES REGEX SUR LES INPUT POUR VERIFIER VALIDITÉ DATA
