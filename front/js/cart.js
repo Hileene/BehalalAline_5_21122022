@@ -121,6 +121,7 @@ function totalPriceCart() {
         //console.log(totalPriceProduct)
         totalPrice += totalPriceProduct
         document.getElementById("totalPrice").textContent = totalPrice
+        //document.getElementById("totalQuantity").textContent =
       })
     }
 
