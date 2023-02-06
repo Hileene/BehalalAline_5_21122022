@@ -70,10 +70,10 @@ else {
               alert('Votre article a bien été supprimé.');
               if (addItemToCart.length === 0) {
                 localStorage.clear()
-              
+
               }
               location.reload()
-              
+
 
             })
           })
@@ -111,9 +111,9 @@ else {
 //TOTALPRICE
 function totalPriceCart() {
   let totalPrice = 0
-  for(let p of addItemToCart) {
+  for (let p of addItemToCart) {
     const apiUrl = "http://localhost:3000/api/products/";
-  
+
     fetch(`${apiUrl}/${p.id}`)
       .then(response => response.json())
       .then(product => {
@@ -123,132 +123,168 @@ function totalPriceCart() {
         document.getElementById("totalPrice").textContent = totalPrice
         //document.getElementById("totalQuantity").textContent = addItemToCart[i].quantity + p.quantity
       })
-    }
+  }
 
 }
 totalPriceCart()
 
 // GESTION DU FORMULAIRE DE COMMANDE
 
+//Création des expressions régulières
 
+let firstNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-]{1,25}$/;
+let lastNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,30}$/;
+let addressField = /^[0-9]{1,3}[A-zÀ-úÂ-ûÄ-ü\s\-',]+$/;
+let cityField = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,25}$/;
+let emailField = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+
+//Récupération des id messages d'erreur
+
+const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+const addressErrorMsg = document.getElementById("addressErrorMsg");
+const cityErrorMsg = document.getElementById("cityErrorMsg");
+const emailErrorMsg = document.getElementById("emailErrorMsg");
 
 
 // Ajout d'un event listener pour écouter le bouton au click
 const submitForm = document.querySelector(".cart__order__form")
 submitForm.addEventListener("submit", (e) => {
   e.preventDefault()
-  
+
   let badInput = 0
-  
+
   // Récupération des id des différents input
-  
+
   let firstNameInput = document.getElementById("firstName").value;
   let lastNameInput = document.getElementById("lastName").value;
   let addressInput = document.getElementById("address").value;
   let cityInput = document.getElementById("city").value;
   let emailInput = document.getElementById("email").value;
-  
-  if(badInput === 0) {
 
-    let  contact = {
+  if (badInput === 0) {
+
+    let contact = {
       firstName: firstNameInput,
       lastName: lastNameInput,
       city: cityInput,
       address: addressInput,
       email: emailInput,
     }
+    console.log(firstName)
     console.log(contact);
-    
+
     let products = []
-    for(let product of addItemToCart) {
+    for (let product of addItemToCart) {
       products.push(product.id)
     }
     console.log(products)
-    
+
     let sendData = {
-      
+
       contact, products
-      
+
     }
-    
+
     console.log(sendData)
-    
-    
-    let order= JSON.stringify(sendData)
-    
-    
-    
+
+
+    let order = JSON.stringify(sendData)
+
+
+
     //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
     async function orderForm() {
-      
-      if(addItemToCart.length === 0) alert("Veuillez ajouter un article à votre panier")
+
+      if (addItemToCart.length === 0) alert("Veuillez ajouter un article à votre panier")
       const cartForm = document.querySelector(".cart__order__form")
       const body = order
       console.log(body)
       let response = await fetch("http://localhost:3000/api/products/order", {
         method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: body,
-          })
-          if(response.ok) {
-            //Réponse du serveur
-            const result = await response.json()
-            
-            // Vide le localstorage
-            function deleteLocalStorage(key) {
-              localStorage.removeItem(key)
-            }
-            // Appel de la fonction
-            deleteLocalStorage(addItemToCart)
-            //Envoie du formmulaire 
-            // window.location.href = `./confirmation.html?orderId=${result.orderId}`;
-          }
-          console.log(response)
+        headers: { "Content-Type": "application/json" },
+        body: body,
+      })
+      if (response.ok) {
+        //Réponse du serveur
+        const result = await response.json()
+
+        // Vide le localstorage
+        function deleteLocalStorage(key) {
+          localStorage.removeItem(key)
         }
-        //Appel de la fonction
-        orderForm()
-    
-  } else {
+        // Appel de la fonction
+        deleteLocalStorage(addItemToCart)
+        //Envoie du formmulaire 
+        // window.location.href = `./confirmation.html?orderId=${result.orderId}`;
+      } else {
+        alert("Erreur")
+        console.log("erreur")
 
-    //Création des expressions régulières
-        
-        let firstName = /^[A-zÀ-úÂ-ûÄ-ü\s\-]{1,25}$/;
-        let lastName = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,30}$/;
-        let address = /^[0-9]{1,3}[A-zÀ-úÂ-ûÄ-ü\s\-',]+$/;
-        let city = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,25}$/;
-        let email = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
-        
-        //Récupération des id messages d'erreur
-        
-        const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-        const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-        const addressErrorMsg = document.getElementById("addressErrorMsg");
-        const cityErrorMsg = document.getElementById("cityErrorMsg");
-        const emailErrorMsg = document.getElementById("emailErrorMsg");
-
-      function testForm() {
-
-        
       }
+      console.log(response)
+    }
+    //Appel de la fonction
+    orderForm()
+
+  }
+  function fieldValidity() {
+    let errorMsg1 = firstNameErrorMsg;
+    if (firstNameField.test(firstNameInput)) {
+      errorMsg1.innerText = "";
+    } else {
+      errorMsg1.innerText = "Veuillez renseigner un prénom valide";
+      badInput++;
+    }
+
+    let errorMsg2 = lastNameErrorMsg;
+    if (lastNameField.test(lastNameInput)) {
+      errorMsg2.innerText = "";
+    } else {
+      errorMsg2.innerText = "Veuillez renseigner un nom de famille valide";
+      badInput++;
+    }
+
+    let errorMsg3 = addressErrorMsg;
+    if (addressField.test(addressInput)) {
+      errorMsg3.innerText = "";
+    } else {
+      errorMsg3.innerText = "Veuillez renseigner une adresse valide";
+      badInput++;
+    }
+
+    let errorMsg4 = cityErrorMsg;
+    if (cityField.test(cityInput)) {
+      errorMsg4.innerText = "";
+    } else {
+      errorMsg4.innerText = "Veuillez renseigner une ville valide";
+      badInput++;
+    }
+
+    let errorMsg5 = emailErrorMsg;
+    if (emailField.test(emailInput)) {
+      errorMsg5.innerText = "";
+    } else {
+      errorMsg5.innerText = "Veuillez renseigner un email valide";
+      badInput++;
+    }
 
 
 
 
   }
-  
-
-  
 
 
 
-      
-    })
+})
 
-  
+//ÉCOUTE ET VÉRIFICATION DES CHAMPS DU FORMULAIRE
 
 
 
 
 
 
-//METTRE LES REGEX SUR LES INPUT POUR VERIFIER VALIDITÉ DATA
+
+
+
