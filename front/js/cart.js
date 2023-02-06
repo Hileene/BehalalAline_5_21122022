@@ -35,7 +35,7 @@ else {
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${addItemToCart[i].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem" data-id="${addItemToCart[i].id}" data-color="${addItemToCart[i].color}">Supprimer</p>
+                      <p class="deleteItem">Supprimer</p>
                     </div>
                   </div>
                 </div>
@@ -43,12 +43,12 @@ else {
         updateQuantity()
         removeItem()
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
+        /*Problème dans le DOM: quand deux articles ont le même id il ne sont affiché l'un après l'autre
+        * ce qui diffère du localstorage*/
         function updateQuantity() {
           let inputs = document.querySelectorAll(".itemQuantity");
           inputs.forEach((input, i) => {
             input.addEventListener("change", () => {
-              /*console.log(input.value);
-              console.log(i)*/
               addItemToCart[i].quantity = input.value;
               console.log(addItemToCart[i].quantity)
               localStorage.setItem("cart", JSON.stringify(addItemToCart))
@@ -121,7 +121,7 @@ function totalPriceCart() {
         //console.log(totalPriceProduct)
         totalPrice += totalPriceProduct
         document.getElementById("totalPrice").textContent = totalPrice
-        //document.getElementById("totalQuantity").textContent =
+        //document.getElementById("totalQuantity").textContent = addItemToCart[i].quantity + p.quantity
       })
     }
 
@@ -130,42 +130,125 @@ totalPriceCart()
 
 // GESTION DU FORMULAIRE DE COMMANDE
 
-// Récupération des id des différents input
-
-const firstName = document.getElementById("firstName");
-const lastName = document.getElementById("lastName");
-const address = document.getElementById("address");
-const city = document.getElementById("city");
-const email = document.getElementById("email");
-
-//Récupération des id messages d'erreur
-
-const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-const addressErrorMsg = document.getElementById("addressErrorMsg");
-const cityErrorMsg = document.getElementById("cityErrorMsg");
-const emailErrorMsg = document.getElementById("emailErrorMsg");
 
 
-let contact = {
-  firstName: "firstName",
-  lastName: "lastName",
-  city: "city",
-  address: "address",
-  email: "email",
-}
-let products = [
-   
-"055743915a544fde83cfdfc904935ee7"
-]
 
-let sendData = {
-
-  contact, products
+// Ajout d'un event listener pour écouter le bouton au click
+const submitForm = document.querySelector(".cart__order__form")
+submitForm.addEventListener("submit", (e) => {
+  e.preventDefault()
   
-}
-console.log(sendData)
+  let badInput = 0
+  
+  // Récupération des id des différents input
+  
+  let firstNameInput = document.getElementById("firstName").value;
+  let lastNameInput = document.getElementById("lastName").value;
+  let addressInput = document.getElementById("address").value;
+  let cityInput = document.getElementById("city").value;
+  let emailInput = document.getElementById("email").value;
+  
+  if(badInput === 0) {
 
-//FETCH METHODE POST(si bad request cela veur dire méthode envoie mles mauvaises données)
+    let  contact = {
+      firstName: firstNameInput,
+      lastName: lastNameInput,
+      city: cityInput,
+      address: addressInput,
+      email: emailInput,
+    }
+    console.log(contact);
+    
+    let products = []
+    for(let product of addItemToCart) {
+      products.push(product.id)
+    }
+    console.log(products)
+    
+    let sendData = {
+      
+      contact, products
+      
+    }
+    
+    console.log(sendData)
+    
+    
+    let order= JSON.stringify(sendData)
+    
+    
+    
+    //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
+    async function orderForm() {
+      
+      if(addItemToCart.length === 0) alert("Veuillez ajouter un article à votre panier")
+      const cartForm = document.querySelector(".cart__order__form")
+      const body = order
+      console.log(body)
+      let response = await fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: body,
+          })
+          if(response.ok) {
+            //Réponse du serveur
+            const result = await response.json()
+            
+            // Vide le localstorage
+            function deleteLocalStorage(key) {
+              localStorage.removeItem(key)
+            }
+            // Appel de la fonction
+            deleteLocalStorage(addItemToCart)
+            //Envoie du formmulaire 
+            // window.location.href = `./confirmation.html?orderId=${result.orderId}`;
+          }
+          console.log(response)
+        }
+        //Appel de la fonction
+        orderForm()
+    
+  } else {
+
+    //Création des expressions régulières
+        
+        let firstName = /^[A-zÀ-úÂ-ûÄ-ü\s\-]{1,25}$/;
+        let lastName = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,30}$/;
+        let address = /^[0-9]{1,3}[A-zÀ-úÂ-ûÄ-ü\s\-',]+$/;
+        let city = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,25}$/;
+        let email = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+        
+        //Récupération des id messages d'erreur
+        
+        const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+        const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+        const addressErrorMsg = document.getElementById("addressErrorMsg");
+        const cityErrorMsg = document.getElementById("cityErrorMsg");
+        const emailErrorMsg = document.getElementById("emailErrorMsg");
+
+      function testForm() {
+
+        
+      }
+
+
+
+
+  }
+  
+
+  
+
+
+
+      
+    })
+
+  
+
+
+
+
+
 
 //METTRE LES REGEX SUR LES INPUT POUR VERIFIER VALIDITÉ DATA
