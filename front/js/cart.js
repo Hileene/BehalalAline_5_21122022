@@ -42,6 +42,9 @@ else {
               </article>`;
         updateQuantity()
         removeItem()
+
+
+
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
         /*Problème dans le DOM: quand deux articles ont le même id il ne sont affiché l'un après l'autre
         * ce qui diffère du localstorage*/
@@ -80,35 +83,12 @@ else {
 
         }
 
-
-        //FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
-        /* function totalPrice() {
-
-            //Déclaration des variables de la quantité et du prix total en tant que nombre
-            let totalItems = 0
-            let totalAmount = 0
-            let price = product.price
-            //console.log(price)
-            //Déclaration et association du calcul aux éléments ".cart__item"
-            const products = document.querySelectorAll(".cart__item")
-            products.forEach((product) => {
-              totalItems += JSON.parse(addItemToCart[i].quantity)
-              console.log(totalItems)
-              totalAmount += addItemToCart[i].quantity * price
-              //console.log(product)
-              console.log(totalAmount)
-              //Affichage des résultats dans le DOM
-              document.getElementById("totalQuantity").textContent = totalItems
-              document.getElementById("totalPrice").textContent = totalAmount
-            })
-        }
- */
       })
       .catch(err => console.error(err));
   }
 }
 
-//TOTALPRICE
+///FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
 function totalPriceCart() {
   let totalPrice = 0
   for (let p of addItemToCart) {
@@ -128,12 +108,15 @@ function totalPriceCart() {
 }
 totalPriceCart()
 
+
+
+
 // GESTION DU FORMULAIRE DE COMMANDE
 
 //Création des expressions régulières
 
-let firstNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-]{1,25}$/;
-let lastNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,30}$/;
+let firstNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-]{2,25}$/;
+let lastNameField = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{2,30}$/;
 let addressField = /^[0-9]{1,3}[A-zÀ-úÂ-ûÄ-ü\s\-',]+$/;
 let cityField = /^[A-zÀ-úÂ-ûÄ-ü\s\-']{1,25}$/;
 let emailField = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
@@ -141,63 +124,74 @@ let emailField = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
 //Récupération des id messages d'erreur
 
 const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+let firstNameState = false
+let firstNameInput = document.getElementById("firstName")
 const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+let lastNameState= false
+let lastNameInput = document.getElementById("lastName").value;
 const addressErrorMsg = document.getElementById("addressErrorMsg");
-const cityErrorMsg = document.getElementById("cityErrorMsg");
-const emailErrorMsg = document.getElementById("emailErrorMsg");
+let addressNameState = false
+let addressInput = document.getElementById("address").value;
 
+const cityErrorMsg = document.getElementById("cityErrorMsg");
+let cityNameState = false
+let cityInput = document.getElementById("city").value;
+const emailErrorMsg = document.getElementById("emailErrorMsg");
+let emailNameState = false
+let emailInput = document.getElementById("email").value;
+
+
+
+let badInput = 0
+
+// Vérification des champs du formulaire
+firstNameInput.addEventListener("input", (test) => {
+test = firstNameField.test(firstNameInput.value)
+firstNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un prénom valide" // condition ternaire
+firstNameState =test ? true : false
+})
 
 // Ajout d'un event listener pour écouter le bouton au click
 const submitForm = document.querySelector(".cart__order__form")
 submitForm.addEventListener("submit", (e) => {
   e.preventDefault()
 
-  let badInput = 0
 
-  // Récupération des id des différents input
-
-  let firstNameInput = document.getElementById("firstName").value;
-  let lastNameInput = document.getElementById("lastName").value;
-  let addressInput = document.getElementById("address").value;
-  let cityInput = document.getElementById("city").value;
-  let emailInput = document.getElementById("email").value;
-
-  if (badInput === 0) {
-
-    let contact = {
-      firstName: firstNameInput,
-      lastName: lastNameInput,
-      city: cityInput,
-      address: addressInput,
-      email: emailInput,
-    }
-    console.log(firstName)
-    console.log(contact);
-
-    let products = []
-    for (let product of addItemToCart) {
-      products.push(product.id)
-    }
-    console.log(products)
-
-    let sendData = {
-
-      contact, products
-
-    }
-
-    console.log(sendData)
+if(firstNameState) {
 
 
-    let order = JSON.stringify(sendData)
+  
 
-
-
-    //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
+  let contact = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput,
+    city: cityInput,
+    address: addressInput,
+    email: emailInput,
+  }
+  
+  let products = []
+  for (let product of addItemToCart) {
+    products.push(product.id)
+  }
+  
+  let sendData = {
+    
+    contact, products
+    
+  }
+  
+  console.log(sendData)
+  
+  
+  let order = JSON.stringify(sendData)
+  
+  
+  
+  //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
+    
     async function orderForm() {
 
-      if (addItemToCart.length === 0) alert("Veuillez ajouter un article à votre panier")
-      const cartForm = document.querySelector(".cart__order__form")
       const body = order
       console.log(body)
       let response = await fetch("http://localhost:3000/api/products/order", {
@@ -221,64 +215,63 @@ submitForm.addEventListener("submit", (e) => {
         alert("Erreur")
         console.log("erreur")
 
+
       }
       console.log(response)
     }
+    
     //Appel de la fonction
     orderForm()
-
-  }
-  function fieldValidity() {
-    let errorMsg1 = firstNameErrorMsg;
-    if (firstNameField.test(firstNameInput)) {
-      errorMsg1.innerText = "";
-    } else {
-      errorMsg1.innerText = "Veuillez renseigner un prénom valide";
-      badInput++;
-    }
-
-    let errorMsg2 = lastNameErrorMsg;
-    if (lastNameField.test(lastNameInput)) {
-      errorMsg2.innerText = "";
-    } else {
-      errorMsg2.innerText = "Veuillez renseigner un nom de famille valide";
-      badInput++;
-    }
-
-    let errorMsg3 = addressErrorMsg;
-    if (addressField.test(addressInput)) {
-      errorMsg3.innerText = "";
-    } else {
-      errorMsg3.innerText = "Veuillez renseigner une adresse valide";
-      badInput++;
-    }
-
-    let errorMsg4 = cityErrorMsg;
-    if (cityField.test(cityInput)) {
-      errorMsg4.innerText = "";
-    } else {
-      errorMsg4.innerText = "Veuillez renseigner une ville valide";
-      badInput++;
-    }
-
-    let errorMsg5 = emailErrorMsg;
-    if (emailField.test(emailInput)) {
-      errorMsg5.innerText = "";
-    } else {
-      errorMsg5.innerText = "Veuillez renseigner un email valide";
-      badInput++;
-    }
-
-
-
-
+  }else {
+    alert("Merci de remplir tous les champs correctement")
   }
 
+  })
 
 
-})
 
-//ÉCOUTE ET VÉRIFICATION DES CHAMPS DU FORMULAIRE
+  
+
+
+  /*let errorMsg2 = lastNameErrorMsg;
+  if (lastNameField.test(lastNameInput)) {
+    errorMsg2.innerText = "";
+  } else {
+    errorMsg2.innerText = "Veuillez renseigner un nom de famille valide";
+    badInput++;
+  }
+
+  let errorMsg3 = addressErrorMsg;
+  if (addressField.test(addressInput)) {
+    errorMsg3.innerText = "";
+  } else {
+    errorMsg3.innerText = "Veuillez renseigner une adresse valide";
+    badInput++;
+  }
+
+  let errorMsg4 = cityErrorMsg;
+  if (cityField.test(cityInput)) {
+    errorMsg4.innerText = "";
+  } else {
+    errorMsg4.innerText = "Veuillez renseigner une ville valide";
+    badInput++;
+  }
+
+  let errorMsg5 = emailErrorMsg;
+  if (emailField.test(emailInput)) {
+    errorMsg5.innerText = "";
+  } else {
+    errorMsg5.innerText = "Veuillez renseigner un email valide";
+    badInput++;
+  }*/
+
+
+
+
+
+
+
+
 
 
 
