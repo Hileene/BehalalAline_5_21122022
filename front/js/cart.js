@@ -127,29 +127,56 @@ const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 let firstNameState = false
 let firstNameInput = document.getElementById("firstName")
 const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-let lastNameState= false
-let lastNameInput = document.getElementById("lastName").value;
+let lastNameState = false
+let lastNameInput = document.getElementById("lastName")
 const addressErrorMsg = document.getElementById("addressErrorMsg");
-let addressNameState = false
-let addressInput = document.getElementById("address").value;
+let addressState = false
+let addressInput = document.getElementById("address");
 
 const cityErrorMsg = document.getElementById("cityErrorMsg");
-let cityNameState = false
-let cityInput = document.getElementById("city").value;
+let cityState = false
+let cityInput = document.getElementById("city");
 const emailErrorMsg = document.getElementById("emailErrorMsg");
-let emailNameState = false
-let emailInput = document.getElementById("email").value;
+let emailState = false
+let emailInput = document.getElementById("email");
 
 
 
-let badInput = 0
+
 
 // Vérification des champs du formulaire
+
 firstNameInput.addEventListener("input", (test) => {
-test = firstNameField.test(firstNameInput.value)
-firstNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un prénom valide" // condition ternaire
-firstNameState =test ? true : false
+  test = firstNameField.test(firstNameInput.value)
+  firstNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un prénom valide" // condition ternaire
+  firstNameState = test ? true : false
 })
+
+lastNameInput.addEventListener("input", (test) => {
+  test = lastNameField.test(lastNameInput.value)
+  lastNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un nom valide" 
+  lastNameState = test ? true : false
+})
+
+addressInput.addEventListener("input", (test) => {
+  test = addressField.test(addressInput.value)
+  addressErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une adresse valide" 
+  addressState = test ? true : false
+})
+
+cityInput.addEventListener("input", (test) => {
+  test = cityField.test(cityInput.value)
+  cityErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une ville valide" 
+  cityState = test ? true : false
+})
+
+emailInput.addEventListener("input", (test) => {
+  test = emailField.test(emailInput.value)
+  emailErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un email valide" 
+  emailState = test ? true : false
+})
+
+
 
 // Ajout d'un event listener pour écouter le bouton au click
 const submitForm = document.querySelector(".cart__order__form")
@@ -157,39 +184,39 @@ submitForm.addEventListener("submit", (e) => {
   e.preventDefault()
 
 
-if(firstNameState) {
+  if (firstNameState && lastNameState && addressState && cityState && emailState) {
 
 
-  
 
-  let contact = {
-    firstName: firstNameInput.value,
-    lastName: lastNameInput,
-    city: cityInput,
-    address: addressInput,
-    email: emailInput,
-  }
-  
-  let products = []
-  for (let product of addItemToCart) {
-    products.push(product.id)
-  }
-  
-  let sendData = {
-    
-    contact, products
-    
-  }
-  
-  console.log(sendData)
-  
-  
-  let order = JSON.stringify(sendData)
-  
-  
-  
-  //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
-    
+
+    let contact = {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      city: cityInput.value,
+      address: addressInput.value,
+      email: emailInput.value,
+    }
+
+    let products = []
+    for (let product of addItemToCart) {
+      products.push(product.id)
+    }
+
+    let sendData = {
+
+      contact, products
+
+    }
+
+    console.log(sendData)
+
+
+    let order = JSON.stringify(sendData)
+
+
+
+    //FETCH METHODE POST POUR ENVOYER LES DONNÉES AU BACKEND
+
     async function orderForm() {
 
       const body = order
@@ -210,61 +237,23 @@ if(firstNameState) {
         // Appel de la fonction
         deleteLocalStorage(addItemToCart)
         //Envoie du formmulaire 
-        // window.location.href = `./confirmation.html?orderId=${result.orderId}`;
+        window.location.href = `./confirmation.html?orderId=${result.orderId}`;
       } else {
         alert("Erreur")
         console.log("erreur")
-
-
       }
       console.log(response)
     }
-    
+
     //Appel de la fonction
     orderForm()
-  }else {
+
+  } else {
+
     alert("Merci de remplir tous les champs correctement")
   }
 
-  })
-
-
-
-  
-
-
-  /*let errorMsg2 = lastNameErrorMsg;
-  if (lastNameField.test(lastNameInput)) {
-    errorMsg2.innerText = "";
-  } else {
-    errorMsg2.innerText = "Veuillez renseigner un nom de famille valide";
-    badInput++;
-  }
-
-  let errorMsg3 = addressErrorMsg;
-  if (addressField.test(addressInput)) {
-    errorMsg3.innerText = "";
-  } else {
-    errorMsg3.innerText = "Veuillez renseigner une adresse valide";
-    badInput++;
-  }
-
-  let errorMsg4 = cityErrorMsg;
-  if (cityField.test(cityInput)) {
-    errorMsg4.innerText = "";
-  } else {
-    errorMsg4.innerText = "Veuillez renseigner une ville valide";
-    badInput++;
-  }
-
-  let errorMsg5 = emailErrorMsg;
-  if (emailField.test(emailInput)) {
-    errorMsg5.innerText = "";
-  } else {
-    errorMsg5.innerText = "Veuillez renseigner un email valide";
-    badInput++;
-  }*/
-
+})
 
 
 
