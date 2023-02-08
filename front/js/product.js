@@ -81,7 +81,7 @@ addButton.addEventListener("click", () => {
             //Mettre à jour le panier
              addItemToCart.push(productData);
              localStorage.setItem("cart", JSON.stringify(addItemToCart))
-            alert("Votre produit à bien été ajouté au panier")
+            alert("Votre produit a bien été ajouté au panier")
 
         }
         //Si le produit avec un même id et une même couleur est déjà dans le panier
