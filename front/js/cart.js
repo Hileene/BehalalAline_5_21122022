@@ -98,7 +98,6 @@ function totalPriceCart() {
       .then(response => response.json())
       .then(product => {
         let totalPriceProduct = p.quantity * product.price
-        //console.log(totalPriceProduct)
         totalPrice += totalPriceProduct
         document.getElementById("totalPrice").textContent = totalPrice
         //document.getElementById("totalQuantity").textContent = addItemToCart[i].quantity + p.quantity
