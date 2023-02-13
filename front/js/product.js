@@ -87,7 +87,7 @@ addButton.addEventListener("click", () => {
         //Si le produit avec un même id et une même couleur est déjà dans le panier
         else {
             //Augmenter la quantité du produit identique
-            let newQuantity = productToUpdate.quantity + productData.quantity;
+            let newQuantity = productToUpdate.quantity += parseInt(productData.quantity);
             if(newQuantity > 100) {
                 alert("Vous ne pouvez pas avoir plus de 100 produits dans votre panier");
 
@@ -98,7 +98,7 @@ addButton.addEventListener("click", () => {
                 alert("Votre produit a bien été ajouté au panier")
             }
         }
-        
+
      }
  })
        
