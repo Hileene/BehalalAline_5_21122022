@@ -2,9 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM entièrement chargé et analysé");
 });
 
+
 //RÉCUPÉRATION DE L'ARRAY VIA LE LOCALSTORAGE
 let addItemToCart = JSON.parse(localStorage.getItem("cart"))
 console.log(addItemToCart)
+
 
 if (!addItemToCart) {
   let cartTitle = document.getElementById("cartAndFormContainer")
@@ -19,7 +21,7 @@ else {
       .then(response => response.json())
       .then(product => {
         document.getElementById("cart__items").innerHTML +=
-          ` <article class="cart__item" data-id="${product._id}" data-color="${addItemToCart[i].color}" data-quantity="${addItemToCart[i].quantity}">
+          ` <article class="cart__item" data-id="${product._id}" data-color="${addItemToCart[i].color}">
                 <div class="cart__item__img">
                   <img src="${product.imageUrl}" alt="${product.altTxt}">
                 </div>
@@ -40,26 +42,59 @@ else {
                   </div>
                 </div>
               </article>`;
+
         updateQuantity()
         removeItem()
 
 
-
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
-        /*Problème dans le DOM: quand deux articles ont le même id il ne sont affiché l'un après l'autre
+        /*Problème dans le DOM: quand deux articles ont le même id ils ne sont pas affichés  l'un après l'autre
         * ce qui diffère du localstorage*/
+
+        //  boucle sur l'input avec un eventListener change qui permet d'écouter le changement des quantités
+        // en recherchant le parent le plus proche afin de sélectionner les couleur et id
+        /*function updateQuantity() {
+          let inputs = document.querySelectorAll(".itemQuantity");
+          for (let q= 0; q < inputs.length; q++){
+            inputs[q].addEventListener("change" , (event) => {
+                event.preventDefault();
+    
+                //Sélection de l'element à modifier en fonction de son id ET sa couleur
+                let changeQuantity = addItemToCart[q].quantity;
+                let quantityValue = inputs[q].valueAsNumber;
+                
+                const quantityFind = addItemToCart.find((element) => element.quantityValue !== changeQuantity);
+    
+                quantityFind.quantity = quantityValue;
+               addItemToCart[q].quantity= quantityFind.quantity;
+    
+                localStorage.setItem("cart", JSON.stringify(addItemToCart));
+            
+            })
+        }
+        }*/
+
+
+
+
         function updateQuantity() {
           let inputs = document.querySelectorAll(".itemQuantity");
           inputs.forEach((input, i) => {
             input.addEventListener("change", () => {
-              addItemToCart[i].quantity = input.value;
-              console.log(addItemToCart[i].quantity)
+              if(input.valueAsNumber >= 1 && input.valueAsNumber <= 100) {
+              addItemToCart[i].quantity = input.valueAsNumber;
               localStorage.setItem("cart", JSON.stringify(addItemToCart))
               totalPriceCart()
+            }else {
+              window.alert("Vous ne pouvez pas avoir plus de 100 produits dans votre panier")
 
+            }
+            
+            
             })
           })
         }
+
         //FONCTION POUR SUPPRIMER UN PRODUIT DU PANIER
         function removeItem() {
           let deleteItems = document.querySelectorAll(".cart__item .deleteItem")
@@ -91,16 +126,18 @@ else {
 ///FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
 function totalPriceCart() {
   let totalPrice = 0
+  let totalQuantity = 0
   for (let p of addItemToCart) {
     const apiUrl = "http://localhost:3000/api/products/";
 
     fetch(`${apiUrl}/${p.id}`)
       .then(response => response.json())
       .then(product => {
-        let totalPriceProduct = p.quantity * product.price
+        let totalPriceProduct = parseInt(p.quantity) * product.price
+        totalQuantity += parseInt(p.quantity)
         totalPrice += totalPriceProduct
         document.getElementById("totalPrice").textContent = totalPrice
-        //document.getElementById("totalQuantity").textContent = addItemToCart[i].quantity + p.quantity
+        document.getElementById("totalQuantity").textContent = totalQuantity
       })
   }
 
@@ -153,31 +190,31 @@ firstNameInput.addEventListener("input", (test) => {
 
 lastNameInput.addEventListener("input", (test) => {
   test = lastNameField.test(lastNameInput.value)
-  lastNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un nom valide" 
+  lastNameErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un nom valide"
   lastNameState = test ? true : false
 })
 
 addressInput.addEventListener("input", (test) => {
   test = addressField.test(addressInput.value)
-  addressErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une adresse valide" 
+  addressErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une adresse valide"
   addressState = test ? true : false
 })
 
 cityInput.addEventListener("input", (test) => {
   test = cityField.test(cityInput.value)
-  cityErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une ville valide" 
+  cityErrorMsg.innerHTML = test ? "" : "Veuillez renseignez une ville valide"
   cityState = test ? true : false
 })
 
 emailInput.addEventListener("input", (test) => {
   test = emailField.test(emailInput.value)
-  emailErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un email valide" 
+  emailErrorMsg.innerHTML = test ? "" : "Veuillez renseignez un email valide"
   emailState = test ? true : false
 })
 
 
 
-// Ajout d'un event listener pour écouter le bouton au click
+// Ajout d'un event listener pour écouter le formulaire
 const submitForm = document.querySelector(".cart__order__form")
 submitForm.addEventListener("submit", (e) => {
   e.preventDefault()
@@ -207,9 +244,6 @@ submitForm.addEventListener("submit", (e) => {
 
     }
 
-    console.log(sendData)
-
-
     let order = JSON.stringify(sendData)
 
 
@@ -219,7 +253,6 @@ submitForm.addEventListener("submit", (e) => {
     async function orderForm() {
 
       const body = order
-      console.log(body)
       let response = await fetch("http://localhost:3000/api/products/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -235,13 +268,13 @@ submitForm.addEventListener("submit", (e) => {
         }
         // Appel de la fonction
         deleteLocalStorage(addItemToCart)
+
         //Envoie du formmulaire 
         window.location.href = `./confirmation.html?orderId=${result.orderId}`;
+
       } else {
         alert("Erreur")
-        console.log("erreur")
       }
-      console.log(response)
     }
 
     //Appel de la fonction
