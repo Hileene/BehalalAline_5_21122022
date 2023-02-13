@@ -86,7 +86,7 @@ else {
               localStorage.setItem("cart", JSON.stringify(addItemToCart))
               totalPriceCart()
             }else {
-              window.alert("Vous ne pouvez pas avoir plus de 100 produits dans votre panier")
+              window.alert("Veuillez sélectionner une quantité valide")
 
             }
             
