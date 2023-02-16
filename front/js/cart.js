@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM entièrement chargé et analysé");
-});
-
 
 //RÉCUPÉRATION DE L'ARRAY VIA LE LOCALSTORAGE
 let addItemToCart = JSON.parse(localStorage.getItem("cart"))
