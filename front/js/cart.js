@@ -42,7 +42,6 @@ else {
                   </div>
                 </div>
               </article>`;
-
         updateQuantity()
         removeItem()
 
@@ -50,31 +49,6 @@ else {
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
         /*Problème dans le DOM: quand deux articles ont le même id ils ne sont pas affichés  l'un après l'autre
         * ce qui diffère du localstorage*/
-
-        //  boucle sur l'input avec un eventListener change qui permet d'écouter le changement des quantités
-        // en recherchant le parent le plus proche afin de sélectionner les couleur et id
-        /*function updateQuantity() {
-          let inputs = document.querySelectorAll(".itemQuantity");
-          for (let q= 0; q < inputs.length; q++){
-            inputs[q].addEventListener("change" , (event) => {
-                event.preventDefault();
-    
-                //Sélection de l'element à modifier en fonction de son id ET sa couleur
-                let changeQuantity = addItemToCart[q].quantity;
-                let quantityValue = inputs[q].valueAsNumber;
-                
-                const quantityFind = addItemToCart.find((element) => element.quantityValue !== changeQuantity);
-    
-                quantityFind.quantity = quantityValue;
-               addItemToCart[q].quantity= quantityFind.quantity;
-    
-                localStorage.setItem("cart", JSON.stringify(addItemToCart));
-            
-            })
-        }
-        }*/
-
-
 
 
         function updateQuantity() {
@@ -124,6 +98,7 @@ else {
 }
 
 ///FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
+if(addItemToCart) {
 function totalPriceCart() {
   let totalPrice = 0
   let totalQuantity = 0
@@ -286,6 +261,7 @@ submitForm.addEventListener("submit", (e) => {
   }
 
 })
+}
 
 
 
