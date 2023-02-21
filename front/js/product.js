@@ -12,7 +12,6 @@ const apiUrl = "http://localhost:3000/api/products/";
 fetch(`${apiUrl}/${id}`)
     .then(response => response.json())
     .then(product => {
-        console.log(product, product.id)
        if(product._id === undefined) {
         document.querySelector(".item").innerHTML = `<h1>Aucun produit sélectionné</h1>`
        }else {

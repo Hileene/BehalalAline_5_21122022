@@ -1,36 +1,35 @@
-
 //RÉCUPÉRATION DE L'ARRAY VIA LE LOCALSTORAGE
 let addItemToCart = JSON.parse(localStorage.getItem("cart"))
 console.log(addItemToCart)
-
 
 if (!addItemToCart) {
   let cartTitle = document.getElementById("cartAndFormContainer")
   cartTitle.innerHTML = `<h1>Votre panier est vide</h1>`
 }
-else {
+  else {
   //CRÉATION DES ÉLÉMENTS HTML
-  for (let i = 0; i < addItemToCart.length; i++) {
-    const apiUrl = "http://localhost:3000/api/products/";
-
-    fetch(`${apiUrl}/${addItemToCart[i].id}`)
-      .then(response => response.json())
-      .then(product => {
-        document.getElementById("cart__items").innerHTML +=
-          ` <article class="cart__item" data-id="${product._id}" data-color="${addItemToCart[i].color}">
+  const apiUrl = "http://localhost:3000/api/products";
+  
+  fetch(`${apiUrl}`)
+  .then(response => response.json())
+  .then(product => {
+    for (let a of addItemToCart) {
+      let search = product.find(element => element._id === a.id)
+      document.getElementById("cart__items").innerHTML +=
+      ` <article class="cart__item" data-id="${a.id}" data-color="${search.color}">
                 <div class="cart__item__img">
-                  <img src="${product.imageUrl}" alt="${product.altTxt}">
+                  <img src="${search.imageUrl}" alt="${search.altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
-                    <h2>${product.name}</h2>
-                    <p>${addItemToCart[i].color}</p>
-                    <p>${product.price}€</p>
+                    <h2>${search.name}</h2>
+                    <p>${a.color}</p>
+                    <p>${search.price}€</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${addItemToCart[i].quantity}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${a.quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem">Supprimer</p>
@@ -43,9 +42,6 @@ else {
 
 
         //FONCTION POUR MODIFIER LA QUANTITÉ D'ARTICLE DANS LE PANIER
-        /*Problème dans le DOM: quand deux articles ont le même id ils ne sont pas affichés  l'un après l'autre
-        * ce qui diffère du localstorage*/
-
 
         function updateQuantity() {
           let inputs = document.querySelectorAll(".itemQuantity");
@@ -59,8 +55,6 @@ else {
               window.alert("Veuillez sélectionner une quantité valide")
 
             }
-            
-            
             })
           })
         }
@@ -70,7 +64,6 @@ else {
           let deleteItems = document.querySelectorAll(".cart__item .deleteItem")
           deleteItems.forEach((item, i) => {
             item.addEventListener("click", () => {
-              console.log(item)
               let removeId = addItemToCart[i].id
               let removeColor = addItemToCart[i].color
               addItemToCart = addItemToCart.filter(item => item.id !== removeId || item.color !== removeColor)
@@ -85,13 +78,13 @@ else {
 
             })
           })
-
         }
 
+      }
       })
       .catch(err => console.error(err));
-  }
 }
+
 
 ///FONCTION POUR AFFICHER LE PRIX TOTAL DU PANIER
 if(addItemToCart) {
@@ -99,7 +92,7 @@ function totalPriceCart() {
   let totalPrice = 0
   let totalQuantity = 0
   for (let p of addItemToCart) {
-    const apiUrl = "http://localhost:3000/api/products/";
+    const apiUrl = "http://localhost:3000/api/products";
 
     fetch(`${apiUrl}/${p.id}`)
       .then(response => response.json())
