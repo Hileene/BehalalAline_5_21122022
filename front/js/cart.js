@@ -226,13 +226,6 @@ submitForm.addEventListener("submit", (e) => {
         //Réponse du serveur
         const result = await response.json()
 
-        // Vide le localstorage
-        function deleteLocalStorage(key) {
-          localStorage.removeItem(key)
-        }
-        // Appel de la fonction
-        deleteLocalStorage(addItemToCart)
-
         //Envoie du formmulaire 
         window.location.href = `./confirmation.html?orderId=${result.orderId}`;
 
