@@ -43,4 +43,3 @@ server.on('listening', () => {
 });
 
 server.listen(port);
-console.log('Current directory:', process.cwd());
