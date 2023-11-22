@@ -1,5 +1,5 @@
 //FETCH: RECUPERATION DES DONNEES DE L'API//
-const apiUrl = "http://localhost:3000/api/products";
+const apiUrl = "https://behalalaline-5-kanap.onrender.com/api/products";
 
 fetch(apiUrl)
     .then(response => response.json())

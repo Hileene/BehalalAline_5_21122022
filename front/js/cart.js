@@ -8,7 +8,7 @@ if (!addItemToCart) {
 }
   else {
   //CRÉATION DES ÉLÉMENTS HTML
-  const apiUrl = "http://localhost:3000/api/products";
+  const apiUrl = "https://behalalaline-5-kanap.onrender.com/api/products";
   
   fetch(`${apiUrl}`)
   .then(response => response.json())
@@ -92,7 +92,7 @@ function totalPriceCart() {
   let totalPrice = 0
   let totalQuantity = 0
   for (let p of addItemToCart) {
-    const apiUrl = "http://localhost:3000/api/products";
+    const apiUrl = "https://behalalaline-5-kanap.onrender.com/api/products";
 
     fetch(`${apiUrl}/${p.id}`)
       .then(response => response.json())
@@ -217,7 +217,7 @@ submitForm.addEventListener("submit", (e) => {
     async function orderForm() {
 
       const body = order
-      let response = await fetch("http://localhost:3000/api/products/order", {
+      let response = await fetch("https://behalalaline-5-kanap.onrender.com/api/products/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: body,

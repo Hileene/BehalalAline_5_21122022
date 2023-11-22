@@ -7,7 +7,7 @@ const idProduct = new URLSearchParams(window.location.search);
 const id = idProduct.get('id')
 
 
-const apiUrl = "http://localhost:3000/api/products/";
+const apiUrl = "https://behalalaline-5-kanap.onrender.com/api/products";
 
 fetch(`${apiUrl}/${id}`)
     .then(response => response.json())
