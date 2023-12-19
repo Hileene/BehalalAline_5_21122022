@@ -11,7 +11,7 @@ fetch(apiUrl)
         const productList = document.getElementById("items")
         for(let product of products) {
             productList.innerHTML +=
-            `<a href="./product.html?id=${product._id}">          
+            `<a href="./front/html/product.html?id=${product._id}">          
             <article>
             <img src="${product.imageUrl}"" alt="${product.altTxt}">
             <h3 class="productName">${product.name}</h3>
