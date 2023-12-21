@@ -3,17 +3,7 @@ const apiUrl = "https://behalalaline-5-kanap.onrender.com/api/products";
 
 fetch(apiUrl)
     .then(response => response.json())
-    .then(products => {
-        // Modifie URLs des images pour utiliser HTTPS
-        const productsWithHttpsUrls = products.map(product => {
-            return {
-                ...product,
-                imageUrl: product.imageUrl.replace('http://', 'https://'),
-            };
-        });
-
-        displayProducts(productsWithHttpsUrls);
-    })
+    .then(products => displayProducts(products))
     .catch(err => console.error(err));
 
 //AFFICHAGE DES PRODUITS VIA L'API//
