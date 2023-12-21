@@ -28,7 +28,9 @@ fetch(`${apiUrl}/${id}`)
 function displayProducts(product) {
     let imgProduct = document.querySelector(".item__img")
     let image = document.createElement("img")
-    image.src = product.imageUrl
+    // Garantie que l'Url de l'image commence avec "https://"
+    image.src = product.imageUrl.startsWith("https://") ? product.imageUrl : "https://" + product.imageUrl;
+
     image.alt = product.altTxt
     imgProduct.appendChild(image);
 
