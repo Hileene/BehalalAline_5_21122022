@@ -29,8 +29,8 @@ function displayProducts(product) {
     let imgProduct = document.querySelector(".item__img")
     let image = document.createElement("img")
     // Garantie que l'Url de l'image commence avec "https://"
-    image.src = product.imageUrl.startsWith("https://") ? product.imageUrl : "https://" + product.imageUrl;
-
+    image.src = product.imageUrl.startsWith("http://") ? product.imageUrl.replace("http://", "https://") : product.imageUrl;
+    console.log(image)
     image.alt = product.altTxt
     imgProduct.appendChild(image);
 
