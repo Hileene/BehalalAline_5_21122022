@@ -15,10 +15,12 @@ if (!addItemToCart) {
   .then(product => {
     for (let a of addItemToCart) {
       let search = product.find(element => element._id === a.id)
+      // Garantie que l'Url de l'image commence avec "https://"
+      let imageUrl = search.imageUrl.startsWith("http://") ? search.imageUrl.replace("http://", "https://") : search.imageUrl;
       document.getElementById("cart__items").innerHTML +=
       ` <article class="cart__item" data-id="${a.id}" data-color="${search.color}">
                 <div class="cart__item__img">
-                  <img src="${search.imageUrl}" alt="${search.altTxt}">
+                  <img src="${imageUrl}" alt="${search.altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
