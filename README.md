@@ -1,4 +1,4 @@
-# Construisez un site e-commerce en JavScript
+# Construisez un site e-commerce en JavaScript
 
 <p align="center">
   <img src="/front/images/readme-banner.png" alt="Bannière Kanap">
