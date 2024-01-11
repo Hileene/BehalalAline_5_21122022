@@ -118,7 +118,7 @@ Vous devrez avoir Node et `npm` installés localement sur votre machine.
 - [Technologies](#technologies)
 - [Functional and Technical Specifications](#functional-and-technical-specifications)
 - [Installation](#installation)
-- [Build With](#developed-with)
+- [Built With](#developed-with)
 - [Author](#author)
 
 ## Project Description
@@ -126,8 +126,8 @@ Vous devrez avoir Node et `npm` installés localement sur votre machine.
 For this project, my mission was to implement a dynamic e-commerce website.
 My tasks included:
 
-- Unifying the already completed front-end work by dynamically integrating API elements into various web pages using JavaScript.
-- Establishing an acceptance test plan.
+- Combine the work that has been done on the front-end by dynamically integrating API elements into various web pages using JavaScript.
+- Set up a plan for acceptance testing
 
 ## Fictional Scenario
 
@@ -151,6 +151,7 @@ Finally, Bilal, the back-end developer, has implemented the API connected to the
 ## Functional and Technical Specifications
 
 The application consists of 4 pages:
+
 - **Home Page:**
   - Dynamically displays all available articles for sale.
   - Each product includes an image, a name, and a description.
@@ -185,7 +186,7 @@ You will need to have Node and `npm` installed locally on your machine.
 - The server should run on `localhost` with default port `3000`. 
 
 
-## Build With
+## Built With
 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Google Font](https://fonts.google.com/) 
