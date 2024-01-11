@@ -1,12 +1,12 @@
 # Construisez un site e-commerce en JavScript
 
 <p align="center">
-  <img src="/front/images/readme-banner.png" alt="Bannière Agence La Panthère">
+  <img src="/front/images/readme-banner.png" alt="Bannière Kanap">
 </p>
 
 *Projet #5 : Formation Développeur Web [OpenClassrooms](https://openclassrooms.com/fr/paths/717-developpeur-web)*
 
-[![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com)
+ [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 <img src="/front/images/powered-by-candy.svg" alt="For The Badge Candy image" />
 
 [Kanap](https://hileene.github.io/BehalalAline_5_21122022/) - <a href="#version-française">README FR</a> - <a href="#english-version">README EN</a>
