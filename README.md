@@ -96,6 +96,7 @@ Vous devrez avoir Node et `npm` installés localement sur votre machine.
 - [Google Font](https://fonts.google.com/) 
 - [GitHub](https://github.com/) 
 - [GitHub Pages](https://pages.github.com/)
+- [Render](https://render.com/)
 
 ## Auteur
 - [@hileene](https://www.github.com/Hileene) 
@@ -190,6 +191,7 @@ You will need to have Node and `npm` installed locally on your machine.
 - [Google Font](https://fonts.google.com/) 
 - [GitHub](https://github.com/) 
 - [GitHub Pages](https://pages.github.com/)
+- [Render](https://render.com/)
 
 ## Author
 - [@hileene](https://www.github.com/Hileene) 
