@@ -42,10 +42,10 @@ Enfin, Bilal, le développeur back-end, a implémenté l'API à laquelle est con
 
 ## Compétences Évaluées
 
-- Créer un plan de test pour une application
-- Gérer des événements JavaScript
-- Interagir avec un web service avec JavaScript
-- Valider des données issues de sources externes
+- 🧪 Créer un plan de test pour une application
+- 🎮 Gérer des événements JavaScript
+- 🌐 Interagir avec un web service avec JavaScript
+- 🛡️ Valider des données issues de sources externes
 
 ## Technologies
 
@@ -105,6 +105,72 @@ Vous devrez avoir Node et `npm` installés localement sur votre machine.
 
 ## ENGLISH VERSION
 
+# Build an E-commerce Website in JavaScript
+
+*Project #5: Web Developer Training [OpenClassrooms](https://openclassrooms.com/en/paths/717-web-developer)*
+
+## Table of Contents
+
+- [Project Description](#project-description)
+- [Fictional Scenario](#fictional-scenario)
+- [Evaluated Skills](#evaluated-skills)
+- [Technologies](#technologies)
+- [Functional and Technical Specifications](#functional-and-technical-specifications)
+- [Installation](#installation)
+- [Build With](#developed-with)
+- [Author](#author)
+
+## Project Description
+
+For this project, my mission was to implement a dynamic e-commerce website.
+My tasks included:
+
+- Unifying the already completed front-end work by dynamically integrating API elements into various web pages using JavaScript.
+- Establishing an acceptance test plan.
+
+## Fictional Scenario
+
+Working in a web development agency, our new client Kanap is a sofa brand that sells its products from its physical store and would like to have an e-commerce platform to sell them online.
+Frank, the front-end developer, has created static site. All the HTML and CSS structure is finalized.
+Finally, Bilal, the back-end developer, has implemented the API connected to the front-end.
+
+## Evaluated Skills
+
+- 🧪 Creating a test plan for an application
+- 🎮 Managing JavaScript events
+- 🌐 Interacting with a web service using JavaScript
+- 🛡️ Validating data from external sources
+
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
+
+## Functional and Technical Specifications
+
+The application consists of 4 pages:
+- **Home Page:**
+  - Dynamically displays all available articles for sale.
+  - Each product includes an image, a name, and a description.
+  - Clicking on a product redirects the user to the product page for more details.
+
+- **Product Page:**
+  - Displays product details.
+  - Contains a dropdown menu allowing the user to choose a customization option.
+  - The user can select a color, quantity, and add it to the cart.
+
+- **Cart Page:**
+  - Displays a summary of the items selected by the user with the total amount.
+  - Option to modify the quantity or delete an item.
+  - Form for placing an order.
+  - User inputs must be analyzed and validated to check the format and type of data before sending it to the API.
+  - Do not store the prices of items locally. Locally stored data is not secure, and the user could modify the price themselves.
+
+- **Confirmation Page:**
+  - Displays an order confirmation message, thanking the user for their order and indicating the order ID sent by the API.
+
+## Installation
 
 ### Back end Prerequisites ###
 
@@ -112,8 +178,21 @@ You will need to have Node and `npm` installed locally on your machine.
 
 ### Back end Installation ###
 
-Clone this repo. From the "back" folder of the project, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+- Clone the repo provided. 
+- From the "back" folder of the project, run `npm install`. 
+- Then run the server with `node server`. 
+- The server should run on `localhost` with default port `3000`. 
+
+
+## Build With
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Google Font](https://fonts.google.com/) 
+- [GitHub](https://github.com/) 
+- [GitHub Pages](https://pages.github.com/)
+
+## Author
+- [@hileene](https://www.github.com/Hileene) 
+- [**Portfolio**](https://portfolio-test.com)
+
+
