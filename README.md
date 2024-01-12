@@ -18,9 +18,9 @@
 ## Sommaire
 
 - [Description du projet](#description-du-projet)
+- [Technologies](#technologies)
 - [Scénario fictif](#scénario-fictif)
 - [Compétences évaluées](#compétences-évaluées)
-- [Technologies](#technologies)
 - [Spécifications fonctionnelles et techniques](#spécifications-fonctionnelles-et-technologies)
 - [Installation](#installation)
 - [Développé avec](#développé-avec)
@@ -33,6 +33,12 @@ Mes tâches étaient les suivantes:
 
 - Unifier les travaux déjà réalisés sur front-end en intégrant dynamiquement les éléments de l’API dans les différentes pages web avec JavaScript
 - Mettre en place un plan de test d’acceptation
+
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
 
 ## Scénario Fictif
 
@@ -47,11 +53,6 @@ Enfin, Bilal, le développeur back-end, a implémenté l'API à laquelle est con
 - 🌐 Interagir avec un web service avec JavaScript
 - 🛡️ Valider des données issues de sources externes
 
-## Technologies
-
-- HTML
-- CSS
-- JavaScript
 
 ## Spécifications fonctionnelles et techniques
 
@@ -113,12 +114,12 @@ Vous devrez avoir Node et `npm` installés localement sur votre machine.
 ## Table of Contents
 
 - [Project Description](#project-description)
-- [Fictional Scenario](#fictional-scenario)
-- [Evaluated Skills](#evaluated-skills)
 - [Technologies](#technologies)
+- [Fictional Scenario](#fictional-scenario)
+- [Assessed Skills](#assessed-skills)
 - [Functional and Technical Specifications](#functional-and-technical-specifications)
 - [Installation](#installation)
-- [Built With](#developed-with)
+- [Built With](#built-with)
 - [Author](#author)
 
 ## Project Description
@@ -129,24 +130,25 @@ My tasks included:
 - Combine the work that has been done on the front-end by dynamically integrating API elements into various web pages using JavaScript.
 - Set up a plan for acceptance testing
 
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
+
 ## Fictional Scenario
 
 Working in a web development agency, our new client Kanap is a sofa brand that sells its products from its physical store and would like to have an e-commerce platform to sell them online.
 Frank, the front-end developer, has created static site. All the HTML and CSS structure is finalized.
 Finally, Bilal, the back-end developer, has implemented the API connected to the front-end.
 
-## Evaluated Skills
+## Assessed Skills
 
 - 🧪 Creating a test plan for an application
 - 🎮 Managing JavaScript events
 - 🌐 Interacting with a web service using JavaScript
 - 🛡️ Validating data from external sources
 
-## Technologies
-
-- HTML
-- CSS
-- JavaScript
 
 ## Functional and Technical Specifications
 
