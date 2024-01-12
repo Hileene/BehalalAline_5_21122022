@@ -17,13 +17,13 @@
 
 ## Sommaire
 
-- [Description du projet](#description-du-projet)
+- [Description du Projet](#description-du-projet)
 - [Technologies](#technologies)
-- [Scénario fictif](#scénario-fictif)
-- [Compétences évaluées](#compétences-évaluées)
-- [Spécifications fonctionnelles et techniques](#spécifications-fonctionnelles-et-technologies)
+- [Scénario Fictif](#scénario-fictif)
+- [Compétences Évaluées](#compétences-évaluées)
+- [Spécifications Fonctionnelles et Techniques](#spécifications-fonctionnelles-et-technologies)
 - [Installation](#installation)
-- [Développé avec](#développé-avec)
+- [Développé Avec](#développé-avec)
 - [Auteur](#auteur)
 
 ## Description du Projet
@@ -54,7 +54,7 @@ Enfin, Bilal, le développeur back-end, a implémenté l'API à laquelle est con
 - 🛡️ Valider des données issues de sources externes
 
 
-## Spécifications fonctionnelles et techniques
+## Spécifications Fonctionnelles et Techniques
 
 L'application est composée de 4 pages:
 - **Une page d’accueil:** 
